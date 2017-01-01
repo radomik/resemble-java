@@ -32,4 +32,9 @@ public class HuePixelChannelImpl extends AbstractPixelChannelImpl<Double> {
     protected Double getMaxValue() {
         return MAX_VALUE;
     }
+    
+    @Override
+    protected Double fromString(String string) {
+		return Double.parseDouble(string);
+	}
 }

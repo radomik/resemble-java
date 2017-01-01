@@ -1,5 +1,14 @@
 package radomik.com.github.resemble.pixel.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.Pair;
 import radomik.com.github.resemble.pixel.Pixel;
 import radomik.com.github.resemble.pixel.PixelChannel;
 import radomik.com.github.resemble.pixel.PixelChannel.Channel;
@@ -7,26 +16,35 @@ import radomik.com.github.resemble.pixel.PixelChannelChangeListener;
 import radomik.com.github.resemble.pixel.PixelChannelNeededListener;
 import radomik.com.github.resemble.pixel.utils.ColorUtils;
 import static radomik.com.github.resemble.pixel.utils.ColorUtils.*;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class PixelImpl implements Pixel {
 
-    private final PixelChannel[] values;
+    @JsonIgnore
+    private final PixelChannel[] values = new PixelChannel[Channel.values().length];
+
+    @JsonIgnore
     private final PixelChannelChangeListener<Integer> rgbChanged = (PixelChannel<Integer> source, Integer oldValue) -> {
         getMinBrightness().setAvailable(false);
         getMaxBrightness().setAvailable(false);
         getHue().setAvailable(false);
     };
+
+    @JsonIgnore
     private final PixelChannelNeededListener<Integer> brightnessNeeded = (PixelChannel<Integer> source) -> {
         addBrightnessInfo();
     };
+
+    @JsonIgnore
     private final PixelChannelNeededListener<Double> hsvNeeded = (PixelChannel<Double> source) -> {
         addHueInfo();
     };
 
     public PixelImpl(int a, int r, int g, int b) {
-        values = new PixelChannel[Channel.values().length];
+        initValues();
+        setARGB(a, r, g, b);
+    }
+
+    private void initValues() {
         values[Channel.ALPHA.ordinal()] = new BytePixelChannelImpl(Channel.ALPHA);
         values[Channel.RED.ordinal()] = new BytePixelChannelImpl(Channel.RED).setChangedListener(rgbChanged);
         values[Channel.GREEN.ordinal()] = new BytePixelChannelImpl(Channel.GREEN).setChangedListener(rgbChanged);
@@ -34,7 +52,27 @@ public class PixelImpl implements Pixel {
         values[Channel.MIN_BRIGHTNESS.ordinal()] = new BytePixelChannelImpl(Channel.MIN_BRIGHTNESS).setNeededListener(brightnessNeeded);
         values[Channel.MAX_BRIGHTNESS.ordinal()] = new BytePixelChannelImpl(Channel.MAX_BRIGHTNESS).setNeededListener(brightnessNeeded);
         values[Channel.HUE.ordinal()] = new HuePixelChannelImpl(Channel.HUE).setNeededListener(hsvNeeded);
-        setARGB(a, r, g, b);
+    }
+
+    @JsonProperty
+    public Map<Channel, String> getValues() {
+        List<Pair<Channel, String>> pairs = Arrays.stream(values)
+                .filter(c -> c.isAvailable())
+                .map(c -> Pair.of(c.getChannel(), c.getStringValue()))
+                .collect(Collectors.toList());
+        Map<Channel, String> retv = new HashMap(pairs.size());
+        pairs.forEach(p -> retv.put(p.getKey(), p.getValue()));
+        return retv;
+    }
+
+    @JsonProperty
+    public void setValues(Map<Channel, String> valueMap) {
+        initValues();
+        if (valueMap != null) {
+            for (Map.Entry<Channel, String> entry: valueMap.entrySet()) {
+                values[entry.getKey().ordinal()].setValue(entry.getValue());
+            }
+        }
     }
 
     public PixelImpl() {
@@ -83,52 +121,62 @@ public class PixelImpl implements Pixel {
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getAlpha() {
         return get(Channel.ALPHA);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getRed() {
         return get(Channel.RED);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getGreen() {
         return get(Channel.GREEN);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getBlue() {
         return get(Channel.BLUE);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getMinBrightness() {
         return get(Channel.MIN_BRIGHTNESS);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Integer> getMaxBrightness() {
         return get(Channel.MAX_BRIGHTNESS);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel<Double> getHue() {
         return get(Channel.HUE);
     }
 
     @Override
+    @JsonIgnore
     public PixelChannel get(Channel channel) {
         return values[channel.ordinal()];
     }
 
     @Override
+    @JsonIgnore
     public void setARGB(int argb) {
         //System.out.printf("setARGB: argb=%08X\n", argb);
         setARGB(getARGB_Alpha(argb), getARGB_Red(argb), getARGB_Green(argb), getARGB_Blue(argb));
     }
 
     @Override
+    @JsonIgnore
     public final void setARGB(int a, int r, int g, int b) {
         //System.out.printf("setARGB: argb={%02X,%02X,%02X,%02X}\n", a, r, g, b);
         getAlpha().setValue(a);
@@ -138,6 +186,7 @@ public class PixelImpl implements Pixel {
     }
 
     @Override
+    @JsonIgnore
     public final void setARGB(BufferedImage image, int x, int y) {
         setARGB(getARGB(image, x, y));
     }

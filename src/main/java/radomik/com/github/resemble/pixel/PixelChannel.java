@@ -20,14 +20,37 @@ public interface PixelChannel<T extends Number> {
      */
     T getValue() throws IllegalStateException;
 
+	/**
+	 * Get channel values as a string.
+	 * 
+	 * @see #getValue()
+	 * 
+	 * @return
+     * @throws IllegalStateException when value is not available
+     */
+	String getStringValue() throws IllegalStateException;
+
     /**
      * Set channel value and mark it as available.
      *
      * @param value
      * @see PixelChannelChangeListener
      * @see PixelChannel#isAvailable()
+     * 
+     * @throws IllegalArgumentException when attempted to set out of range value
      */
-    void setValue(T value);
+    void setValue(T value) throws IllegalArgumentException;
+    
+    /**
+     * Set channel value (from String) and mark it as available.
+     *
+     * @param value
+     * @see PixelChannelChangeListener
+     * @see PixelChannel#isAvailable()
+     * 
+     * @throws IllegalArgumentException when attempted to set out of range value
+     */
+    void setValue(String value) throws IllegalArgumentException;
 
     Channel getChannel();
 

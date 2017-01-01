@@ -32,4 +32,9 @@ public class BytePixelChannelImpl extends AbstractPixelChannelImpl<Integer> {
     protected Integer getMaxValue() {
         return MAX_VALUE;
     }
+    
+    @Override
+    protected Integer fromString(String string) {
+		return Integer.parseInt(string);
+	}
 }

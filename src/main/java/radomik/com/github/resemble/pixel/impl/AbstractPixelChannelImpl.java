@@ -73,9 +73,27 @@ public abstract class AbstractPixelChannelImpl<T extends Number> implements Pixe
         }
         return value;
     }
+    
+    @Override
+    public String getStringValue() throws IllegalStateException {
+		return String.valueOf(getValue());
+	}
+
+	@Override
+    public void setValue(String string) throws IllegalArgumentException {
+		T value;
+		try {
+			value = fromString(string);
+		} catch (Throwable e) {
+			throw new IllegalArgumentException(String.format(
+				"Could not convert string '%s' value into %s channel %s",
+					string, getClass().getSimpleName(), getChannel()), e);
+		}
+		setValue(value);
+	}
 
     @Override
-    public void setValue(T value) {
+    public void setValue(T value) throws IllegalArgumentException {
         if (!checkValueRange(value)) {
             throw new IllegalArgumentException(String.format("Value of %s is out of range [%s .. %s] for channel %s",
                     value, getMinValue(), getMaxValue(), channel));
@@ -124,5 +142,7 @@ public abstract class AbstractPixelChannelImpl<T extends Number> implements Pixe
     protected abstract T getMinValue();
 
     protected abstract T getMaxValue();
+    
+    protected abstract T fromString(String string);
 
 }

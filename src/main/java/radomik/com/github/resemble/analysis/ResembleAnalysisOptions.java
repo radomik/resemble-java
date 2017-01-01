@@ -1,12 +1,11 @@
 package radomik.com.github.resemble.analysis;
 
-import radomik.com.github.resemble.pixel.Pixel;
 import radomik.com.github.resemble.pixel.impl.PixelImpl;
 
 public class ResembleAnalysisOptions {
 
-    private final Pixel tolerance = new PixelImpl(16, 16, 16, 16); // ARGB
-    private final Pixel errorPixelColor = new PixelImpl(255, 255, 0, 255); // ARGB
+    private final PixelImpl tolerance = new PixelImpl(16, 16, 16, 16); // ARGB
+    private final PixelImpl errorPixelColor = new PixelImpl(255, 255, 0, 255); // ARGB
     private ErrorPixel errorPixel = ErrorPixel.FLAT;
     private boolean ignoreAntialiasing = false;
     private boolean ignoreColors = true;
@@ -89,7 +88,7 @@ public class ResembleAnalysisOptions {
         this.largeImageThreshold = largeImageThreshold;
     }
 
-    public Pixel getTolerance() {
+    public PixelImpl getTolerance() {
         return tolerance;
     }
 
@@ -98,7 +97,7 @@ public class ResembleAnalysisOptions {
      *
      * @return color for Error Pixels
      */
-    public Pixel getErrorPixelColor() {
+    public PixelImpl getErrorPixelColor() {
         return errorPixelColor;
     }
 
