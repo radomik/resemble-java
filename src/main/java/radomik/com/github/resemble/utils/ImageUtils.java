@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public abstract class ImageUtils {
 
     public static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
+    private static final boolean CHECK_TYPE = false;
 
     /**
      * Check image type.
@@ -17,7 +18,7 @@ public abstract class ImageUtils {
      * @throws IllegalArgumentException when image type is invalid
      */
     public static void checkImageType(BufferedImage img, String name) throws IllegalArgumentException {
-        if (img.getType() != IMAGE_TYPE) {
+        if (CHECK_TYPE && img.getType() != IMAGE_TYPE) {
             throw new IllegalArgumentException(String.format("Invalid %s.type=%s, expected %s",
                     name, img.getType(), IMAGE_TYPE));
         }
@@ -32,12 +33,16 @@ public abstract class ImageUtils {
      * @param imgName2
      * @throws IllegalArgumentException when image dimensions are not matching
      */
-    public static void checkDimensionsMatch(BufferedImage img1, String imgName1, BufferedImage img2, String imgName2)
+    public static void checkImageMatch(BufferedImage img1, String imgName1, BufferedImage img2, String imgName2)
             throws IllegalArgumentException {
         if ((img1.getWidth() != img2.getWidth()) || (img1.getHeight() != img2.getHeight())) {
             throw new IllegalArgumentException(String.format("Size mismatch (%s.{w,h}={%d,%d} and %s.{w,h}={%d,%d})",
                     imgName1, img1.getWidth(), img1.getHeight(), imgName2, img2.getWidth(), img2.getHeight()));
         }
+//        if (img1.getType() != img2.getType()) {
+//            throw new IllegalArgumentException(String.format("Image type mismatch (%s.type=%d and %s.type=%d)",
+//                    imgName1, img1.getType(), imgName2, img2.getType()));
+//        }
     }
 
     /**
@@ -64,8 +69,11 @@ public abstract class ImageUtils {
         } catch (IOException ex) {
             throw new IOException("Could not read image file '" + file + "'", ex);
         }
-        BufferedImage convertedImg = new BufferedImage(bufImg.getWidth(), bufImg.getHeight(), IMAGE_TYPE);
-        convertedImg.getGraphics().drawImage(bufImg, 0, 0, null);
-        return convertedImg;
+        if (CHECK_TYPE && bufImg.getType() != IMAGE_TYPE) {
+            BufferedImage convertedImg = new BufferedImage(bufImg.getWidth(), bufImg.getHeight(), IMAGE_TYPE);
+            convertedImg.getGraphics().drawImage(bufImg, 0, 0, null);
+            return convertedImg;
+        }
+        return bufImg;
     }
 }

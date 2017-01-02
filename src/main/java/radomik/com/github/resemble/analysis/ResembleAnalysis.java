@@ -23,7 +23,7 @@ public class ResembleAnalysis {
         Instant startTime = Instant.now();
         ImageUtils.checkImageType(img1, "img1");
         ImageUtils.checkImageType(img2, "img2");
-        ImageUtils.checkDimensionsMatch(img1, "img1", img2, "img2");
+        ImageUtils.checkImageMatch(img1, "img1", img2, "img2");
 
         BufferedImage imgOut = ImageUtils.createEmptyImage(img1);
 
