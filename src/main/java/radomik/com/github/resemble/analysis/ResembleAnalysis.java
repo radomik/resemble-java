@@ -23,7 +23,13 @@ public class ResembleAnalysis {
         Instant startTime = Instant.now();
         ImageUtils.checkImageType(img1, "img1");
         ImageUtils.checkImageType(img2, "img2");
-        ImageUtils.checkImageMatch(img1, "img1", img2, "img2");
+        if(options.isScaleToSameSize()){
+            if(img1.getWidth() > img2.getWidth()) {
+                img2 = ImageUtils.resize(img2, img1.getWidth(),img1.getHeight());
+            } else {
+                img1 = ImageUtils.resize(img1, img2.getWidth(),img2.getHeight());
+            }
+        }
 
         BufferedImage imgOut = ImageUtils.createEmptyImage(img1);
 
@@ -54,7 +60,6 @@ public class ResembleAnalysis {
                         continue;
                     }
                 }
-                //System.out.printf("analyseImages: (x,y)=(%d,%d)\n", x, y);
                 pixel1.setARGB(img1, x, y);
                 pixel2.setARGB(img2, x, y);
 
