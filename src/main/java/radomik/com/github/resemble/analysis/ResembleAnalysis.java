@@ -25,9 +25,9 @@ public class ResembleAnalysis {
         ImageUtils.checkImageType(img2, "img2");
         if(options.isScaleToSameSize()){
             if(img1.getWidth() > img2.getWidth()) {
-                img2 = ImageUtils.resize(img2, img1.getWidth(),img1.getHeight());
-            } else {
                 img1 = ImageUtils.resize(img1, img2.getWidth(),img2.getHeight());
+            } else {
+                img2 = ImageUtils.resize(img2, img1.getWidth(),img1.getHeight());
             }
         }
 
@@ -130,9 +130,7 @@ public class ResembleAnalysis {
                 targetPix.setARGB(img, x2, y2);
 
                 if (sourcePix.isContrasting(targetPix, options.getTolerance())) {
-                    if (++hasHighContrastSibling > 1) {
-                        return true;
-                    }
+                    hasHighContrastSibling++;
                 }
 
                 if (sourcePix.isRGBSame(targetPix)) {
@@ -142,9 +140,10 @@ public class ResembleAnalysis {
                 double sourcePixHue = sourcePix.getHue().getValue();
                 double diffHue = Math.abs(targetPixHue - sourcePixHue);
                 if (diffHue > 0.3) {
-                    if (++hasSiblingWithDifferentHue > 1) {
-                        return true;
-                    }
+                    hasSiblingWithDifferentHue++;
+                }
+                if (hasSiblingWithDifferentHue > 1 || hasHighContrastSibling > 1) {
+                    return true;
                 }
             }
         }
