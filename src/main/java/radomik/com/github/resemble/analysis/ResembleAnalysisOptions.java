@@ -8,7 +8,7 @@ public class ResembleAnalysisOptions {
     private final PixelImpl errorPixelColor = new PixelImpl(255, 255, 0, 255); // ARGB
     private ErrorPixel errorPixel = ErrorPixel.FLAT;
     private boolean ignoreAntialiasing = false;
-    private boolean ignoreColors = true;
+    private boolean ignoreColors = false;
     private boolean scaleToSameSize = false;
     private double pixelTransparency = 1.0;
     private double largeImageThreshold = 1200.0;
