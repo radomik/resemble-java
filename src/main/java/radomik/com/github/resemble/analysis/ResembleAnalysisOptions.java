@@ -4,7 +4,7 @@ import radomik.com.github.resemble.pixel.impl.PixelImpl;
 
 public class ResembleAnalysisOptions {
 
-    private final PixelImpl tolerance = new PixelImpl(16, 16, 16, 16); // ARGB
+    private PixelImpl tolerance;
     private final PixelImpl errorPixelColor = new PixelImpl(255, 255, 0, 255); // ARGB
     private ErrorPixel errorPixel = ErrorPixel.FLAT;
     private boolean ignoreAntialiasing = false;
@@ -13,9 +13,10 @@ public class ResembleAnalysisOptions {
     private double pixelTransparency = 1.0;
     private double largeImageThreshold = 1200.0;
 
-    public ResembleAnalysisOptions() {
-        tolerance.getMinBrightness().setValue(16);
-        tolerance.getMaxBrightness().setValue(240);
+    ResembleAnalysisOptions(int minBrightness, int maxBrightness, PixelImpl tolerance) {
+        this.tolerance = tolerance;
+        this.tolerance.getMinBrightness().setValue(minBrightness);
+        this.tolerance.getMaxBrightness().setValue(maxBrightness);
     }
 
     @Override
@@ -100,5 +101,6 @@ public class ResembleAnalysisOptions {
     public PixelImpl getErrorPixelColor() {
         return errorPixelColor;
     }
+
 
 }
