@@ -4,14 +4,12 @@ import radomik.com.github.resemble.pixel.Pixel;
 import radomik.com.github.resemble.pixel.impl.PixelImpl;
 import radomik.com.github.resemble.pixel.utils.ColorUtils;
 import radomik.com.github.resemble.utils.ImageUtils;
+
 import java.awt.image.BufferedImage;
 import java.time.Instant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ResembleAnalysis {
 
-    private static final Logger log = LoggerFactory.getLogger(ResembleAnalysis.class);
     private final Pixel targetPix = new PixelImpl();
     private final ResembleAnalysisOptions options;
 
