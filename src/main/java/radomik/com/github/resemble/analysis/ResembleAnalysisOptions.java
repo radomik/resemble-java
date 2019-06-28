@@ -9,7 +9,7 @@ public class ResembleAnalysisOptions {
     private ErrorPixel errorPixel = ErrorPixel.FLAT;
     private boolean ignoreAntialiasing = false;
     private boolean ignoreColors = false;
-    private boolean scaleToSameSize = false;
+    private boolean scaleToSameSize = true;
     private double pixelTransparency = 1.0;
     private double largeImageThreshold = 1200.0;
 
