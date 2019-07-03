@@ -12,9 +12,9 @@ You can run the `TestApp.java` file or:
 ```java
         File imgFile1 = new File("1.jpg");
         File imgFile2 = new File("2.jpg");
-        //Crop if needed
-        BufferedImage img1 = ImageUtils.cropWhiteBackground(ImageUtils.readImage(imgFile1), 50);
-        BufferedImage img2 = ImageUtils.cropWhiteBackground(ImageUtils.readImage(imgFile2), 50);
+
+        BufferedImage img1 = ImageUtils.readImage(imgFile1);
+        BufferedImage img2 = ImageUtils.readImage(imgFile2);
         
         //ignore antialiasing between two images (different qualities for example)
         ResembleAnalysisOptions options = ResembleAnaylsisOptionsTemplates.ignoringAntialiasing();
