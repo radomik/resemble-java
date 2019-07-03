@@ -10,6 +10,10 @@ public class ResembleAnalysisOptions {
     private boolean ignoreAntialiasing = false;
     private boolean ignoreColors = false;
     private boolean scaleToSameSize = true;
+
+
+    private boolean cropWhiteBackground = false;
+    private int cropThreshold = 0;
     private double pixelTransparency = 1.0;
     private double largeImageThreshold = 1200.0;
 
@@ -28,6 +32,8 @@ public class ResembleAnalysisOptions {
                 ", ignoreColors=" + ignoreColors +
                 ", scaleToSameSize=" + scaleToSameSize +
                 ", pixelTransparency=" + pixelTransparency +
+                ", cropWhiteBackground=" + cropWhiteBackground +
+                ", cropThreshold=" + cropThreshold +
                 ", largeImageThreshold=" + largeImageThreshold + '}';
     }
 
@@ -45,6 +51,19 @@ public class ResembleAnalysisOptions {
 
     public void setIgnoreAntialiasing(boolean ignoreAntialiasing) {
         this.ignoreAntialiasing = ignoreAntialiasing;
+    }
+
+    public int getCropThreshold() {
+        return cropThreshold;
+    }
+
+    public boolean isCropWhiteBackground() {
+        return cropWhiteBackground;
+    }
+
+    public void setCropWhiteBackground(boolean cropWhiteBackground, int cropThreshold) {
+        this.cropWhiteBackground = cropWhiteBackground;
+        this.cropThreshold = cropThreshold;
     }
 
     public boolean isIgnoreColors() {

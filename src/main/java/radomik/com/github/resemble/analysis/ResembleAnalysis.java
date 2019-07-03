@@ -21,6 +21,11 @@ public class ResembleAnalysis {
         Instant startTime = Instant.now();
         ImageUtils.checkImageType(img1, "img1");
         ImageUtils.checkImageType(img2, "img2");
+        if(options.isCropWhiteBackground()){
+            img1 = ImageUtils.cropWhiteBackground(img1,options.getCropThreshold());
+            img2 = ImageUtils.cropWhiteBackground(img2,options.getCropThreshold());
+        }
+
         if(options.isScaleToSameSize()){
             if(img1.getWidth() > img2.getWidth()) {
                 img1 = ImageUtils.resize(img1, img2.getWidth(),img2.getHeight());
