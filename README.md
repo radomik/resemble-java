@@ -50,3 +50,4 @@ You can run the `TestApp.java` file or:
 - Resize the two images before compare them (allowing different size and quality images comparison)
 - Add templating for comparison using the thresolds available the ResembleJS Demo page http://rsmbl.github.io/Resemble.js/
 - Make threshold customizable
+- Crop the image removing the white background
