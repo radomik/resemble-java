@@ -8,7 +8,7 @@ Java fork of <a href="https://github.com/Huddle/Resemble.js" target="_blank">Res
 
 # Usage
 
-```
+```java
         File imgFile1 = new File("1.jpg");
         File imgFile2 = new File("2.jpg");
         //Crop if needed
