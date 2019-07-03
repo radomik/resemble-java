@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 public abstract class ImageUtils {
 
     public static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
-    private static final boolean CHECK_TYPE = false;
+    private static final boolean CHECK_TYPE = true;
 
     /**
      * Check image type.
@@ -104,5 +104,38 @@ public abstract class ImageUtils {
                 return convertedImg;
             }
             return bufImg;
+        }
+
+    /**
+     * Find the White background and returned a cropped image
+     *
+     * @param image Image to Crop
+     * @param whiteThreshold Threshold to consider a grayscaled pixel as white. 0 = completely white
+     * @return cropped Image
+     */
+        public static BufferedImage cropWhiteBackground(BufferedImage image, int whiteThreshold){
+            int firstX = 9999;
+            int firstY = 9999;
+            int lastX = 0;
+            int lastY = 0;
+            for (int y = 0; y < image.getHeight(); y++) {
+                for (int x = 0; x < image.getWidth(); x++) {
+                    int grayScalePixel= image.getRGB(x, y)& 0xFF;
+                    boolean isWhite = grayScalePixel  >= 255 - whiteThreshold;
+                    if(!isWhite && x < firstX) {
+                        firstX = x;
+                    }
+                    if(!isWhite && y < firstY) {
+                        firstY = y;
+                    }
+                    if(!isWhite && x > lastX) {
+                        lastX = x;
+                    }
+                    if(!isWhite && y > lastY) {
+                        lastY = y;
+                    }
+                }
+            }
+            return image.getSubimage(firstX,firstY, lastX-firstX, lastY-firstY);
         }
     }
