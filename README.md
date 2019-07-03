@@ -36,7 +36,18 @@ You can run the `TestApp.java` file or:
                 results.getDiffBounds()));
 ```
 
-New Features:
+# Spot the Differences
+<img src="https://github.com/toninofox/resemble-java/blob/master/1.jpg" width="256"><img src="https://github.com/toninofox/resemble-java/blob/master/2.jpg" width="256">
+
+<details>
+  <summary>Check the Solution</summary>
+  <img src="https://github.com/toninofox/resemble-java/blob/master/3.jpg" width="256">
+</details>
+
+
+
+## New Features:
 - Resize the two images before compare them (allowing different size and quality images comparison)
 - Add templating for comparison using the thresolds available the ResembleJS Demo page http://rsmbl.github.io/Resemble.js/
 - Make threshold customizable
+- Crop the image removing the white background
