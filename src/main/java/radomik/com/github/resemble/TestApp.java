@@ -23,7 +23,8 @@ public class TestApp {
         setLookAndFeel();
 
         ResembleAnalysisOptions options = ResembleAnaylsisOptionsTemplates.ignoringAntialiasing();
-        options.setScaleToSameSize(true);
+        options.setCropWhiteBackground(true);
+        options.setCropThreshold(50);
         File imgFile1 = new File(args[0]);
         File imgFile2 = new File(args[1]);
 

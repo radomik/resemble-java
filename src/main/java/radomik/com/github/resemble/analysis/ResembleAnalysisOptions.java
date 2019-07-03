@@ -57,13 +57,16 @@ public class ResembleAnalysisOptions {
         return cropThreshold;
     }
 
+    public void setCropThreshold(int threshold) {
+        this.cropThreshold = threshold;
+    }
+
     public boolean isCropWhiteBackground() {
         return cropWhiteBackground;
     }
 
-    public void setCropWhiteBackground(boolean cropWhiteBackground, int cropThreshold) {
+    public void setCropWhiteBackground(boolean cropWhiteBackground) {
         this.cropWhiteBackground = cropWhiteBackground;
-        this.cropThreshold = cropThreshold;
     }
 
     public boolean isIgnoreColors() {
