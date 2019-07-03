@@ -3,4 +3,10 @@ nbactions.xml
 nbproject/
 hs_err_pid*
 
+#intelliJ
 .idea/*
+
+#eclipse
+.settings/*
+.classpath
+.project
