@@ -7,6 +7,7 @@ Java fork of <a href="https://github.com/Huddle/Resemble.js" target="_blank">Res
 - Preprocess util to background crop, resize, etc
 
 # Usage
+You can run the `TestApp.java` file or:
 
 ```java
         File imgFile1 = new File("1.jpg");
@@ -22,8 +23,7 @@ Java fork of <a href="https://github.com/Huddle/Resemble.js" target="_blank">Res
         
         ResembleParserData dataResult = ResembleParser.parse(results.getOutputImage());
 
-        ImageWindow.show(results.getOutputImage(), "Results",
-                String.format("File 1: '%s'\n" +
+        System.out.println(String.format("File 1: '%s'\n" +
                         "File 2: '%s'\n\n" +
                         "Info: %s\n\n" +
                         "Output image:\n%s\n\n" +
@@ -31,9 +31,9 @@ Java fork of <a href="https://github.com/Huddle/Resemble.js" target="_blank">Res
                         "Mismatch percentage: %.2f %%\n" +
                         "Analysis time: %d miliseconds\n" +
                         "Difference bounds: %s",
-                        imgFile1, imgFile2, dataResult, results.getOutputImage(), options,
-                        results.getMismatchPercentage(), results.getAnalysisTime().toMillis(),
-                        results.getDiffBounds())
+                imgFile1, imgFile2, dataResult, results.getOutputImage(), options,
+                results.getMismatchPercentage(), results.getAnalysisTime().toMillis(),
+                results.getDiffBounds()));
 ```
 
 New Features:
