@@ -44,7 +44,7 @@ You can run the `TestApp.java` file or:
   <img src="https://github.com/toninofox/resemble-java/blob/master/3.jpg" width="256">
 </details>
 
-
+The image used in the comparison example was created by [Daniel Rajendran](https://twitter.com/Shadowise)
 
 ## New Features:
 - Resize the two images before compare them (allowing different size and quality images comparison)
