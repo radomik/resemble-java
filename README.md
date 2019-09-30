@@ -36,7 +36,7 @@ You can run the `TestApp.java` file or:
                 results.getDiffBounds()));
 ```
 
-# Spot the Differences
+# Spot the 8 Differences
 <img src="https://github.com/toninofox/resemble-java/blob/master/1.jpg" width="256"><img src="https://github.com/toninofox/resemble-java/blob/master/2.jpg" width="256">
 
 <details>
