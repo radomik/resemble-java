@@ -48,6 +48,6 @@ The image used in the comparison example was created by [Daniel Rajendran](https
 
 ## New Features:
 - Resize the two images before compare them (allowing different size and quality images comparison)
-- Add templating for comparison using the thresolds available the ResembleJS Demo page http://rsmbl.github.io/Resemble.js/
+- Add templating for comparison using the thresholds available the ResembleJS Demo page http://rsmbl.github.io/Resemble.js/
 - Make threshold customizable
 - Crop the image removing the white background
