@@ -4,14 +4,12 @@ import radomik.com.github.resemble.pixel.Pixel;
 import radomik.com.github.resemble.pixel.impl.PixelImpl;
 import radomik.com.github.resemble.pixel.utils.ColorUtils;
 import radomik.com.github.resemble.utils.ImageUtils;
+
 import java.awt.image.BufferedImage;
 import java.time.Instant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ResembleAnalysis {
 
-    private static final Logger log = LoggerFactory.getLogger(ResembleAnalysis.class);
     private final Pixel targetPix = new PixelImpl();
     private final ResembleAnalysisOptions options;
 
@@ -23,7 +21,18 @@ public class ResembleAnalysis {
         Instant startTime = Instant.now();
         ImageUtils.checkImageType(img1, "img1");
         ImageUtils.checkImageType(img2, "img2");
-        ImageUtils.checkImageMatch(img1, "img1", img2, "img2");
+        if(options.isCropWhiteBackground()){
+            img1 = ImageUtils.cropWhiteBackground(img1,options.getCropThreshold());
+            img2 = ImageUtils.cropWhiteBackground(img2,options.getCropThreshold());
+        }
+
+        if(options.isScaleToSameSize()){
+            if(img1.getWidth() > img2.getWidth()) {
+                img1 = ImageUtils.resize(img1, img2.getWidth(),img2.getHeight());
+            } else {
+                img2 = ImageUtils.resize(img2, img1.getWidth(),img1.getHeight());
+            }
+        }
 
         BufferedImage imgOut = ImageUtils.createEmptyImage(img1);
 
@@ -54,7 +63,6 @@ public class ResembleAnalysis {
                         continue;
                     }
                 }
-                //System.out.printf("analyseImages: (x,y)=(%d,%d)\n", x, y);
                 pixel1.setARGB(img1, x, y);
                 pixel2.setARGB(img2, x, y);
 
@@ -125,9 +133,7 @@ public class ResembleAnalysis {
                 targetPix.setARGB(img, x2, y2);
 
                 if (sourcePix.isContrasting(targetPix, options.getTolerance())) {
-                    if (++hasHighContrastSibling > 1) {
-                        return true;
-                    }
+                    hasHighContrastSibling++;
                 }
 
                 if (sourcePix.isRGBSame(targetPix)) {
@@ -137,9 +143,10 @@ public class ResembleAnalysis {
                 double sourcePixHue = sourcePix.getHue().getValue();
                 double diffHue = Math.abs(targetPixHue - sourcePixHue);
                 if (diffHue > 0.3) {
-                    if (++hasSiblingWithDifferentHue > 1) {
-                        return true;
-                    }
+                    hasSiblingWithDifferentHue++;
+                }
+                if (hasSiblingWithDifferentHue > 1 || hasHighContrastSibling > 1) {
+                    return true;
                 }
             }
         }

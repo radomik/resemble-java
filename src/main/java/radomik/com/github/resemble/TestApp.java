@@ -1,5 +1,6 @@
 package radomik.com.github.resemble;
 
+import radomik.com.github.resemble.analysis.ResembleAnaylsisOptionsTemplates;
 import radomik.com.github.resemble.gui.ImageWindow;
 import radomik.com.github.resemble.analysis.ResembleAnalysis;
 import radomik.com.github.resemble.analysis.ResembleAnalysisOptions;
@@ -21,7 +22,9 @@ public class TestApp {
         }
         setLookAndFeel();
 
-        ResembleAnalysisOptions options = new ResembleAnalysisOptions();
+        ResembleAnalysisOptions options = ResembleAnaylsisOptionsTemplates.ignoringAntialiasing();
+        options.setCropWhiteBackground(true);
+        options.setCropThreshold(50);
         File imgFile1 = new File(args[0]);
         File imgFile2 = new File(args[1]);
 
