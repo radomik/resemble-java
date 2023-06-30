@@ -2,12 +2,12 @@
 Java fork of <a href="https://github.com/Huddle/Resemble.js" target="_blank">Resemble.js</a> javascript library.
 
 # Image Comparison
-- Compare two images giving a difference score 
-- create an image with a visual difference in different way
-- Preprocess util to background crop, resize, etc
+- Compare two images giving a mismatch score 
+- create an image with a configurable visual difference
+- Preprocess util to crop background, resize, fit.
 
 # Usage
-You can run the `TestApp.java` file or:
+You can run the `TestApp.java`  file or:
 
 ```java
         File imgFile1 = new File("1.jpg");
@@ -47,7 +47,7 @@ You can run the `TestApp.java` file or:
 The image used in the comparison example was created by [Daniel Rajendran](https://twitter.com/Shadowise)
 
 ## New Features:
-- Resize the two images before compare them (allowing different size and quality images comparison)
+- Resize the two images before comparing them (allowing different size and quality images comparison)
 - Add templating for comparison using the thresholds available the ResembleJS Demo page http://rsmbl.github.io/Resemble.js/
-- Make threshold customizable
+- Make crop threshold customizable
 - Crop the image removing the white background
